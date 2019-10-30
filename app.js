@@ -1,17 +1,18 @@
-const express = require('express')
-const cors = require('cors')
-const morgan = require('morgan')
-const app = express()
+/* eslint-disable strict */
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const app = express();
 const playstore = require('./playstore.js');
 
-app.use(morgan())
-app.use(cors())
+app.use(morgan('common'));
+app.use(cors());
 
 app.get('/', (req, res) => {
 
   const validGenres = ['action', 'puzzle', 'strategy', 'casual', 'arcade', 'card']
 
-  let filteredData = playstore
+  let filteredData = playstore;
 
   if ('sort' in req.query && (req.query.sort !== 'rating' && req.query.sort !== 'app')) {
     return res.status(400).json({error: 'not valid query'})
@@ -41,6 +42,4 @@ app.get('/', (req, res) => {
   return res.json(playstore)
 });
 
-app.listen(8000, () => {
-  console.log('server running');
-});
+module.exports = app; 
